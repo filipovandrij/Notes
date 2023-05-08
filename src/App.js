@@ -5,8 +5,7 @@ function App() {
   const [newTaskDescription, setNewTaskDescription] = useState("");
 
   useEffect(() => {
-    const ul = document.querySelector("ul");
-    renderTasks([], ul);
+    renderTasks([]);
   }, []);
 
   function handleNewTaskDescriptionChange(event) {
@@ -16,8 +15,7 @@ function App() {
   function handleNewTaskSubmit(event) {
     event.preventDefault();
     const task = { description: newTaskDescription };
-    const ul = document.querySelector("ul");
-    renderTasks([task], ul);
+    renderTasks([task]);
     setNewTaskDescription("");
   }
 

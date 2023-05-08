@@ -50,6 +50,24 @@ request.onsuccess = function (event) {
       input.value = "";
     };
   });
+
+  const ul = document.querySelector("ul");
+  ul.addEventListener("click", function (event) {
+    if (event.target.tagName.toLowerCase() === "li") {
+      const taskId = parseInt(event.target.getAttribute("data-id"));
+      const transaction = db.transaction(["tasks"], "readwrite");
+      const objectStore = transaction.objectStore("tasks");
+      const requestDelete = objectStore.delete(taskId);
+
+      requestDelete.onerror = function (event) {
+        console.log("Error deleting task");
+      };
+
+      requestDelete.onsuccess = function (event) {
+        renderTasks([]);
+      };
+    }
+  });
 };
 
 function renderTasks(tasks) {
@@ -59,6 +77,7 @@ function renderTasks(tasks) {
   for (const task of tasks) {
     const li = document.createElement("li");
     li.textContent = task.description;
+    li.setAttribute("data-id", task.id);
     ul.appendChild(li);
   }
 }
