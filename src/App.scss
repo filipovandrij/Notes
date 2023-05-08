@@ -1,0 +1,13 @@
+.work-container {
+  display: flex;
+}
+
+.sidebar {
+  flex-basis: 20%;
+  flex-grow: 0;
+}
+
+.workspace {
+  flex-basis: 80%;
+  flex-grow: 1;
+}

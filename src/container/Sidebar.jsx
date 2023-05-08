@@ -1,4 +1,10 @@
+import ListItem from "../components/ListItem";
+
 const Sidebar = () => {
-  return <div>Sidebar</div>;
+  return (
+    <div className="sidebar">
+      <ListItem />
+    </div>
+  );
 };
 export default Sidebar;
