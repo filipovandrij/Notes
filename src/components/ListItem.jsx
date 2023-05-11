@@ -1,32 +1,22 @@
 import "./ListItem.scss";
 
-const ListItem = ({
-  title = "Default Title",
-  description = "Default Description",
-  date = "08.04.2023",
-}) => {
-  const shortenedDescription =
-    description.length > 14
-      ? description.substring(0, 14) + "..."
-      : description;
-
+const ListItem = ({ carsData, setSelectTask }) => {
+  const handleClick = (event) => {
+    setSelectTask(event);
+  };
   return (
     <ul className="list-item">
-      <li>
-        <div className="list-item-title">{title}</div>
-        <div className="list-item-description">{shortenedDescription}</div>
-        <div className="list-item-date">{date}</div>
-      </li>
-      <li>
-        <div className="list-item-title">{title}</div>
-        <div className="list-item-description">{shortenedDescription}</div>
-        <div className="list-item-date">{date}</div>
-      </li>
-      <li>
-        <div className="list-item-title">{title}</div>
-        <div className="list-item-description">{shortenedDescription}</div>
-        <div className="list-item-date">{date}</div>
-      </li>
+      {carsData.map((car) => (
+        <li
+          onClick={() => handleClick(car.id)}
+          key={car.id}
+          className="new-task"
+        >
+          <p>List-number: {car.id}</p>
+          <p>Title: {car.colour}</p>
+          <p>Description: {car.make}</p>
+        </li>
+      ))}
     </ul>
   );
 };

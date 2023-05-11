@@ -21,25 +21,21 @@ function App() {
     fetchData();
   }, []);
 
+  const [selectTask, setSelectTask] = useState(Number);
+
   return (
     <div>
       <StyledEngineProvider injectFirst>
         <CssBaseline />
-        <Header />
+        <Header setCarsData={setCarsData} />
         <Container className="work-container" maxWidth="xl">
-          <Sidebar />
-          <WorkSpace setCarsData={setCarsData} />
+          <Sidebar setSelectTask={setSelectTask} carsData={carsData} />
+          <WorkSpace
+            carsData={carsData}
+            selectTask={selectTask}
+            setCarsData={setCarsData}
+          />
         </Container>
-
-        <div>
-          {carsData.map((car) => (
-            <div key={car.id} className="new-client">
-              <p>List-number: {car.id}</p>
-              <p>Colour: {car.colour}</p>
-              <p>Make: {car.make}</p>
-            </div>
-          ))}
-        </div>
       </StyledEngineProvider>
     </div>
   );

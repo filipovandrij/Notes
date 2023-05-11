@@ -1,9 +1,9 @@
 import ListItem from "../components/ListItem";
 
-const Sidebar = () => {
+const Sidebar = ({ setSelectTask, carsData }) => {
   return (
     <div className="sidebar">
-      <ListItem />
+      <ListItem setSelectTask={setSelectTask} carsData={carsData} />
     </div>
   );
 };
