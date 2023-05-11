@@ -5,7 +5,7 @@ const indexedDB =
   window.msIndexedDB ||
   window.shimIndexedDB;
 
-const request = indexedDB.open("CarsDataBase", 1);
+const request = indexedDB.open("TaskDataBase", 1);
 
 request.onerror = function (event) {
   console.error("An error occurred with IndexedDB");
@@ -39,7 +39,7 @@ request.onsuccess = function () {
 
 function getAllRecords() {
   return new Promise((resolve, reject) => {
-    const request = indexedDB.open("CarsDataBase", 1);
+    const request = indexedDB.open("TaskDataBase", 1);
 
     request.onerror = function (event) {
       console.error("An error occurred with IndexedDB");
@@ -66,7 +66,7 @@ function getAllRecords() {
 
 function addNewRecord(car) {
   return new Promise((resolve, reject) => {
-    const request = indexedDB.open("CarsDataBase", 1);
+    const request = indexedDB.open("TaskDataBase", 1);
 
     request.onerror = function (event) {
       console.error("An error occurred with IndexedDB");
@@ -91,4 +91,31 @@ function addNewRecord(car) {
   });
 }
 
-export { getAllRecords, addNewRecord };
+function deleteRecord(id) {
+  return new Promise((resolve, reject) => {
+    const request = indexedDB.open("TaskDataBase", 1);
+
+    request.onerror = function (event) {
+      console.error("An error occurred with IndexedDB");
+      reject(event);
+    };
+
+    request.onsuccess = function () {
+      const db = request.result;
+      const transaction = db.transaction("cars", "readwrite");
+
+      const store = transaction.objectStore("cars");
+
+      const deleteRecord = store.delete(id);
+      deleteRecord.onsuccess = function () {
+        resolve();
+      };
+
+      transaction.oncomplete = function () {
+        db.close();
+      };
+    };
+  });
+}
+
+export { getAllRecords, addNewRecord, deleteRecord };

@@ -13,10 +13,10 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 
-import { getAllRecords, addNewRecord } from "../IndexedDB";
+import { deleteRecord, getAllRecords, addNewRecord } from "../IndexedDB";
 import "./Header.scss";
 
-const Header = ({ setCarsData }) => {
+const Header = ({ selectTask, setCarsData }) => {
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
@@ -68,6 +68,10 @@ const Header = ({ setCarsData }) => {
     }));
   };
 
+  const handleDelete = (value) => {
+    deleteRecord(value);
+  };
+
   return (
     <>
       <Box className="header" sx={{ flexGrow: 1 }}>
@@ -81,7 +85,11 @@ const Header = ({ setCarsData }) => {
               >
                 <AddIcon />
               </IconButton>
-              <IconButton size="large" color="inherit">
+              <IconButton
+                onClick={() => handleDelete(selectTask)}
+                size="large"
+                color="inherit"
+              >
                 <DeleteIcon />
               </IconButton>
               <IconButton size="large" color="inherit">
