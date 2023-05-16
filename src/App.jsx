@@ -12,6 +12,8 @@ import "./App.scss";
 function App() {
   const [carsData, setCarsData] = useState([]);
 
+  const [selectedCarId, setSelectedCarId] = useState(null);
+
   useEffect(() => {
     async function fetchData() {
       const data = await getAllRecords();
@@ -27,9 +29,18 @@ function App() {
     <div>
       <StyledEngineProvider injectFirst>
         <CssBaseline />
-        <Header selectTask={selectTask} setCarsData={setCarsData} />
+        <Header
+          selectedCarId={selectedCarId}
+          selectTask={selectTask}
+          setCarsData={setCarsData}
+        />
         <Container className="work-container" maxWidth="xl">
-          <Sidebar setSelectTask={setSelectTask} carsData={carsData} />
+          <Sidebar
+            setSelectedCarId={setSelectedCarId}
+            selectedCarId={selectedCarId}
+            setSelectTask={setSelectTask}
+            carsData={carsData}
+          />
           <WorkSpace
             carsData={carsData}
             selectTask={selectTask}

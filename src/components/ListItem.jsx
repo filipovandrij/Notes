@@ -1,7 +1,14 @@
 import "./ListItem.scss";
+import { useState } from "react";
 
-const ListItem = ({ carsData, setSelectTask }) => {
+const ListItem = ({
+  setSelectedCarId,
+  selectedCarId,
+  carsData,
+  setSelectTask,
+}) => {
   const handleClick = (event) => {
+    setSelectedCarId(event);
     setSelectTask(event);
   };
 
@@ -16,9 +23,8 @@ const ListItem = ({ carsData, setSelectTask }) => {
           <li
             onClick={() => handleClick(car.id)}
             key={car.id}
-            className="new-task"
+            className={`new-task ${selectedCarId === car.id ? "selected" : ""}`}
           >
-            <p>List-number: {car.id}</p>
             <p>
               Title:{" "}
               {car.colour.length > 14

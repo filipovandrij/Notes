@@ -20,6 +20,9 @@
     &:hover {
       background-color: #bbb;
     }
+    &.selected {
+      background-color: #bbbbbb5b;
+    }
   }
 }
 

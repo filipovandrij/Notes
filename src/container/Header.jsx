@@ -16,7 +16,7 @@ import TextField from "@mui/material/TextField";
 import { deleteRecord, getAllRecords, addNewRecord } from "../IndexedDB";
 import "./Header.scss";
 
-const Header = ({ selectTask, setCarsData }) => {
+const Header = ({ selectedCarId, selectTask, setCarsData }) => {
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
@@ -64,6 +64,8 @@ const Header = ({ selectTask, setCarsData }) => {
     deleteRecord(value);
   };
 
+  const isAnyCarSelected = selectedCarId !== null;
+
   return (
     <>
       <Box className="header" sx={{ flexGrow: 1 }}>
@@ -78,6 +80,7 @@ const Header = ({ selectTask, setCarsData }) => {
                 <AddIcon />
               </IconButton>
               <IconButton
+                disabled={!isAnyCarSelected}
                 onClick={() => {
                   handleDelete(selectTask);
                   window.location.reload();
@@ -88,6 +91,7 @@ const Header = ({ selectTask, setCarsData }) => {
                 <DeleteIcon />
               </IconButton>
               <IconButton
+                disabled={!isAnyCarSelected}
                 size="large"
                 color="inherit"
                 onClick={() => window.location.reload()}
