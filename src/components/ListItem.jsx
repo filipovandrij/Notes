@@ -1,5 +1,4 @@
 import "./ListItem.scss";
-import { useState } from "react";
 
 const ListItem = ({
   setSelectedCarId,

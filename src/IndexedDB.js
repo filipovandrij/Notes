@@ -25,8 +25,6 @@ request.onsuccess = function () {
   const db = request.result;
   const transaction = db.transaction("cars", "readwrite");
 
-  const store = transaction.objectStore("cars");
-
   transaction.oncomplete = function () {
     db.close();
   };
