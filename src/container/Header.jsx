@@ -12,7 +12,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-
+import TextField from "@mui/material/TextField";
 import { deleteRecord, getAllRecords, addNewRecord } from "../IndexedDB";
 import "./Header.scss";
 
@@ -35,23 +35,16 @@ const Header = ({ selectTask, setCarsData }) => {
   const handleFormSubmit = (event) => {
     event.preventDefault();
 
-    // Добавьте новую машину в IndexedDB
     addNewRecord({ ...newCar, id: Date.now() })
       .then(() => {
-        console.log("Новая машина успешно добавлена в IndexedDB");
-        // обновляем список машин, чтобы отобразить добавленную машину
+        console.log("New task successfully added to IndexedDB");
         getAllRecords().then((cars) => {
           setCarsData(cars);
         });
       })
       .catch((error) => {
-        console.error(
-          "Ошибка при добавлении новой машины в IndexedDB: ",
-          error
-        );
+        console.error("Error while adding new task to IndexedDB: ", error);
       });
-
-    // Очищаем состояние новой машины
     setNewCar({
       colour: "",
       make: "",
@@ -61,7 +54,6 @@ const Header = ({ selectTask, setCarsData }) => {
   const handleInputChange = (event) => {
     const { name, value } = event.target;
 
-    // Обновляем состояние новой машины
     setNewCar((prevCar) => ({
       ...prevCar,
       [name]: value,
@@ -86,13 +78,20 @@ const Header = ({ selectTask, setCarsData }) => {
                 <AddIcon />
               </IconButton>
               <IconButton
-                onClick={() => handleDelete(selectTask)}
+                onClick={() => {
+                  handleDelete(selectTask);
+                  window.location.reload();
+                }}
                 size="large"
                 color="inherit"
               >
                 <DeleteIcon />
               </IconButton>
-              <IconButton size="large" color="inherit">
+              <IconButton
+                size="large"
+                color="inherit"
+                onClick={() => window.location.reload()}
+              >
                 <EditNoteIcon />
               </IconButton>
             </div>
@@ -111,24 +110,25 @@ const Header = ({ selectTask, setCarsData }) => {
               Think of a title for the post and describe it.
             </DialogContentText>
             <div>
-              <label>
-                Title:
-                <input
-                  type="text"
-                  name="colour"
-                  value={newCar.colour}
-                  onChange={handleInputChange}
-                />
-              </label>
-              <label>
-                Description:
-                <input
-                  type="text"
-                  name="make"
-                  value={newCar.make}
-                  onChange={handleInputChange}
-                />
-              </label>
+              <TextField
+                className="title"
+                label="Title:"
+                multiline
+                rows={1}
+                name="colour"
+                defaultValue={newCar.colour}
+                variant="standard"
+                onChange={handleInputChange}
+              />
+              <TextField
+                className="description"
+                label="Description:"
+                multiline
+                rows={6}
+                name="make"
+                defaultValue={newCar.make}
+                onChange={handleInputChange}
+              />
             </div>
           </DialogContent>
           <DialogActions>
